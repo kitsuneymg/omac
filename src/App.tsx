@@ -1,17 +1,18 @@
-import { ChangeEvent, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
+import { useDropzone } from "react-dropzone";
 import "./App.css";
 
 function App() {
   const [total, setTotal] = useState<number | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
+  const handleChange = (acceptedFiles: File[]) =>
     startTransition(async () => {
       const currentYear = String(new Date().getFullYear());
       let total = 0;
 
       const files = await Promise.all(
-        [...(event.target.files ?? [])]?.map(
+        [...(acceptedFiles ?? [])]?.map(
           (file) =>
             new Promise<string>((resolve) => {
               const reader = new FileReader();
@@ -45,20 +46,67 @@ function App() {
       setTotal(total);
     });
 
+  const { getRootProps, getInputProps, open } = useDropzone({
+    noClick: true,
+    noKeyboard: true,
+    onDrop: handleChange,
+  });
+
   return (
     <>
-      <div className="dropzone">
+      <div
+        {...getRootProps({
+          className: "dropzone",
+        })}
+      >
         <input
-          type="file"
-          accept=".json,application/json"
-          // @ts-expect-error nonstandard
-          directory="true"
-          disabled={isPending}
-          webkitdirectory="true"
-          multiple
-          onChange={handleChange}
-          onClick={(event) => event.preventDefault()}
+          {...getInputProps({
+            accept: ".json,application/json",
+            directory: "true",
+            disabled: isPending,
+            multiple: true,
+            webkitdirectory: "true",
+          })}
         />
+        {total == null && (
+          <div className="instructions">
+            <ol>
+              <li>
+                Enable custom scores:{" "}
+                <i>Options &gt; Simply Love &gt; Write Custom Scores</i>
+                <ul>
+                  <li>if you just enabled custom scores, play a song or two</li>
+                </ul>
+              </li>
+              <li>
+                Go to your ITGmania save folder
+                <ul>
+                  <li>
+                    Windows: <code>%APPDATA%/ITGmania/Save</code>
+                  </li>
+                  <li>
+                    Linux: <code>~/.itgmania/Save</code>
+                  </li>
+                  <li>
+                    macOS: <code>~/Library/Preferences/ITGmania</code>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                Go to <code>LocalProfiles/00000000</code> inside the save
+                folder, replacing the 0's with the correct number for your
+                profile
+              </li>
+              <li>
+                Drag the <code>SL-Scores</code> folder onto this window, or{" "}
+                <button onClick={open} type="button">
+                  click here
+                </button>{" "}
+                to navigate to it
+              </li>
+            </ol>
+          </div>
+        )}
       </div>
       {total ? (
         <div className="count">
@@ -66,11 +114,7 @@ function App() {
           <div className="total">{total.toLocaleString()}</div>
           arrow{total === 1 ? "" : "s"} this year!
         </div>
-      ) : (
-        <div className="instructions">
-          Drag your <code>SL-Scores</code> folder here!
-        </div>
-      )}
+      ) : null}
     </>
   );
 }
