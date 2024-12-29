@@ -68,53 +68,57 @@ function App() {
             webkitdirectory: "true",
           })}
         />
-        {total == null && (
-          <div className="instructions">
-            <ol>
-              <li>
-                Enable custom scores:{" "}
-                <i>Options &gt; Simply Love &gt; Write Custom Scores</i>
-                <ul>
-                  <li>if you just enabled custom scores, play a song or two</li>
-                </ul>
-              </li>
-              <li>
-                Go to your ITGmania save folder
-                <ul>
-                  <li>
-                    Windows: <code>%APPDATA%/ITGmania/Save</code>
-                  </li>
-                  <li>
-                    Linux: <code>~/.itgmania/Save</code>
-                  </li>
-                  <li>
-                    macOS: <code>~/Library/Preferences/ITGmania</code>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                Go to <code>LocalProfiles/00000000</code> inside the save
-                folder, replacing the 0's with the correct number for your
-                profile
-              </li>
-              <li>
-                Drag the <code>SL-Scores</code> folder onto this window, or{" "}
-                <button onClick={open} type="button">
-                  click here
-                </button>{" "}
-                to navigate to it
-              </li>
-            </ol>
-          </div>
-        )}
-      </div>
-      {total ? (
-        <div className="count">
-          You hit
-          <div className="total">{total.toLocaleString()}</div>
-          arrow{total === 1 ? "" : "s"} this year!
+        <div className="contents">
+          <h1>One Million Arrows Challenge</h1>
+          {total == null ? (
+            <div className="instructions">
+              <ol>
+                <li>
+                  Enable custom scores:{" "}
+                  <i>Options &gt; Simply Love &gt; Write Custom Scores</i>
+                  <ul>
+                    <li>
+                      If you just enabled custom scores, play a song or two
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  Go to your ITGmania save folder
+                  <ul>
+                    <li>
+                      Windows: <code>%APPDATA%/ITGmania/Save</code>
+                    </li>
+                    <li>
+                      Linux: <code>~/.itgmania/Save</code>
+                    </li>
+                    <li>
+                      macOS: <code>~/Library/Preferences/ITGmania</code>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  Go to <code>LocalProfiles/00000000</code> inside the save
+                  folder, replacing the 0's with the correct number for your
+                  profile
+                </li>
+                <li>
+                  Drag the <code>SL-Scores</code> folder onto this window, or{" "}
+                  <button onClick={open} type="button">
+                    click here
+                  </button>{" "}
+                  to navigate to it
+                </li>
+              </ol>
+            </div>
+          ) : (
+            <div className="count">
+              You hit
+              <div className="total">{total.toLocaleString()}</div>
+              arrow{total === 1 ? "" : "s"} this year!
+            </div>
+          )}
         </div>
-      ) : null}
+      </div>
     </>
   );
 }
