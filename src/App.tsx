@@ -58,7 +58,11 @@ function App() {
           <div className="total">{total}</div>
           arrow{total === 1 ? "" : "s"} this year!
         </div>
-      ) : null}
+      ) : (
+        <div className="instructions">
+          Drag your <code>SL-Scores</code> folder here!
+        </div>
+      )}
     </>
   );
 }

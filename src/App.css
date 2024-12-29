@@ -9,7 +9,8 @@
   }
 }
 
-.count {
+.count,
+.instructions {
   text-align: center;
 }
 
