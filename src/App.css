@@ -20,3 +20,16 @@
   font-size: 5rem;
   font-weight: bold;
 }
+
+.copyright {
+  bottom: 0.5rem;
+  font-style: normal;
+  position: fixed;
+  right: 0.5rem;
+
+  & a {
+    color: inherit;
+    font-weight: inherit;
+    text-decoration: underline;
+  }
+}

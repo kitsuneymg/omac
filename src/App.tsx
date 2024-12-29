@@ -117,6 +117,10 @@ function App() {
               arrow{total === 1 ? "" : "s"} this year!
             </div>
           )}
+          <address className="copyright">
+            © <a href="https://jeffreyatw.com">JeffreyATW</a>.{" "}
+            <a href="https://github.com/JeffreyATW/omac">GitHub</a>
+          </address>
         </div>
       </div>
     </>
