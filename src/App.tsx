@@ -63,7 +63,7 @@ function App() {
       {total ? (
         <div className="count">
           You hit
-          <div className="total">{total}</div>
+          <div className="total">{total.toLocaleString()}</div>
           arrow{total === 1 ? "" : "s"} this year!
         </div>
       ) : (
