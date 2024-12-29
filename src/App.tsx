@@ -7,6 +7,7 @@ function App() {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
     startTransition(async () => {
+      const currentYear = String(new Date().getFullYear());
       let total = 0;
 
       const files = await Promise.all(
@@ -24,14 +25,21 @@ function App() {
       );
 
       files.forEach((file) => {
-        const score = JSON.parse(file);
-        Object.entries(score.Score?.TapNoteScores ?? {}).forEach(
-          ([label, value]) => {
-            if (label.match(/^W[0-9]+$/)) {
-              total += value as number;
-            }
+        try {
+          const parsed = JSON.parse(file);
+          const { Score } = parsed;
+          if (Score.DateTime.startsWith(currentYear)) {
+            Object.entries(Score.TapNoteScores ?? {}).forEach(
+              ([label, value]) => {
+                if (label.match(/^W[0-9]+$/)) {
+                  total += value as number;
+                }
+              }
+            );
           }
-        );
+        } catch (_) {
+          return;
+        }
       });
 
       setTotal(total);
