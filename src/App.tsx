@@ -30,13 +30,7 @@ function App() {
           const parsed = JSON.parse(file);
           const { Score } = parsed;
           if (Score.DateTime.startsWith(currentYear)) {
-            Object.entries(Score.TapNoteScores ?? {}).forEach(
-              ([label, value]) => {
-                if (label.match(/^W[0-9]+$/)) {
-                  total += value as number;
-                }
-              }
-            );
+            total += Score.Steps as number;            
           }
         } catch (_) {
           return;
@@ -74,17 +68,14 @@ function App() {
             <div className="instructions">
               <ol>
                 <li>
-                  Enable custom scores:{" "}
-                  <i>Options &gt; Simply Love &gt; Write Custom Scores</i>
-                  <ul>
-                    <li>
-                      If you just enabled custom scores, play a song or two
-                    </li>
-                  </ul>
+                  Download the <a href="https://github.com/kitsuneymg/simply-love-stepcount">stepcount module</a>
                 </li>
+                <li>Place stepcount.lua in the Simply Love "Modules" folder</li>
+                <li>Restart ITG Mania</li>
                 <li>
                   Go to your ITGmania save folder
                   <ul>
+                    <li>Portable: <code>./itgmania/Save/</code></li>
                     <li>
                       Windows: <code>%APPDATA%/ITGmania/Save</code>
                     </li>
@@ -97,12 +88,10 @@ function App() {
                   </ul>
                 </li>
                 <li>
-                  Go to <code>LocalProfiles/00000000</code> inside the save
-                  folder, replacing the 0's with the correct number for your
-                  profile
+                  Go to <code>LocalProfiles/00000000</code> (or whichever profile you use.)                  
                 </li>
                 <li>
-                  Drag the <code>SL-Scores</code> folder onto this window, or{" "}
+                  Drag the <code>SL-Steps</code> folder onto this window, or{" "}
                   <button onClick={open} type="button">
                     click here
                   </button>{" "}
