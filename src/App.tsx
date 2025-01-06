@@ -28,9 +28,13 @@ function App() {
       files.forEach((file) => {
         try {
           const parsed = JSON.parse(file);
-          const { Score } = parsed;
-          if (Score.DateTime.startsWith(currentYear)) {
-            total += Score.Steps as number;            
+          //const { Score } = parsed;
+          //console.log("Score:", file);
+          console.log("parsed:", parsed);
+          console.log("DateTime:", parsed.DateTime);
+          console.log("Steps:", parsed.Steps[0]);
+          if (parsed.DateTime.startsWith(currentYear)) {
+            total += parsed.Steps[0] as number;            
           }
         } catch (_) {
           return;
